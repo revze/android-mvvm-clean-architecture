@@ -5,17 +5,15 @@ import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.igdb.R
+import com.example.igdb.data.model.Games
 import com.example.igdb.domain.common.State
 import com.example.igdb.domain.common.State.*
-import com.example.igdb.data.model.Games
-import com.example.igdb.external.helper.DialogHelper
-import com.example.igdb.presentation.base.BaseActivity
-import com.example.igdb.presentation.shared.GlideApp
+import com.example.igdb.external.GlideApp
 import com.example.igdb.external.extensions.hide
 import com.example.igdb.external.extensions.show
+import com.example.igdb.external.helper.DialogHelper
+import com.example.igdb.presentation.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_games_detail.*
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 
 class GamesDetailActivity : BaseActivity<GamesDetailViewModel>() {
@@ -32,7 +30,8 @@ class GamesDetailActivity : BaseActivity<GamesDetailViewModel>() {
 
     override fun getLayoutId() = R.layout.activity_games_detail
 
-    override fun getViewModelProvider() = ViewModelProvider(this, viewModelFactory)[GamesDetailViewModel::class.java]
+    override fun getViewModelProvider() =
+        ViewModelProvider(this, viewModelFactory)[GamesDetailViewModel::class.java]
 
     override fun onActivityReady(savedInstanceState: Bundle?) {
         supportActionBar?.title = intent.getStringExtra(GAMES_TITLE)
@@ -62,7 +61,8 @@ class GamesDetailActivity : BaseActivity<GamesDetailViewModel>() {
                     if (it.isNotEmpty()) {
                         val url = it[0].url.replace("//", "https://")
                             .replace("t_thumb", "t_screenshot_med")
-                        GlideApp.with(this).load(url).into(iv_screenshot)
+                        GlideApp.with(this).load(url).placeholder(R.drawable.bg_placeholder_square)
+                            .into(iv_screenshot)
                     }
                 }
                 tv_summary.text = games.summary
@@ -76,7 +76,8 @@ class GamesDetailActivity : BaseActivity<GamesDetailViewModel>() {
                 tv_rating.text = games.rating?.toString() ?: "N/A"
                 games.releaseDates.let {
                     if (!it.isNullOrEmpty()) {
-                        tv_release_date.text = convertLongToDate(it[0].date)
+                        tv_release_date.text =
+                            textHelper.convertLongToFormattedDate(it[0].date, "EEEE, d MMMM yyyy")
                     } else {
                         tv_release_date.text = "N/A"
                     }
@@ -118,12 +119,5 @@ class GamesDetailActivity : BaseActivity<GamesDetailViewModel>() {
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun convertLongToDate(date: Long): String {
-        val date2 = Date(date * 1000)
-        val dateFormat = SimpleDateFormat("EEEE, d MMMM yyyy", Locale.getDefault())
-
-        return dateFormat.format(date2.time)
     }
 }

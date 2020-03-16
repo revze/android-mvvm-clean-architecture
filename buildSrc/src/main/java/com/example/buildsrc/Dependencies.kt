@@ -12,7 +12,7 @@ object AppMetaData {
 
 object Versions {
     // Application
-    const val kotlin = "1.3.61"
+    const val kotlin = "1.3.70"
     const val gradle = "3.6.1"
 
     // Core

@@ -3,6 +3,7 @@ package com.example.igdb.presentation.base
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
+import com.example.igdb.external.helper.TextHelper
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -14,6 +15,9 @@ abstract class BaseActivity<T : ViewModel> : AppCompatActivity(), HasAndroidInje
 
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
+
+    @Inject
+    lateinit var textHelper: TextHelper
 
     internal lateinit var viewModel: T
 

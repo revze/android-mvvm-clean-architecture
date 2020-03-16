@@ -3,10 +3,10 @@ package com.example.igdb.presentation.main
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.example.igdb.R
+import com.example.igdb.external.CustomViewPagerAdapter
 import com.example.igdb.presentation.article.list.ArticlesFragment
 import com.example.igdb.presentation.base.BaseActivity
 import com.example.igdb.presentation.games.list.GamesFragment
-import com.example.igdb.external.CustomViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity<MainViewModel>() {
@@ -27,6 +27,14 @@ class MainActivity : BaseActivity<MainViewModel>() {
             fragments
         )
         vp.adapter = adapter
+        vp.addOnPageChangeListener(object : CustomViewPagerAdapter.OnPageChangeListener {
+            override fun onPageChanged(position: Int) {
+                when (position) {
+                    0 -> bn.selectedItemId = R.id.action_games
+                    1 -> bn.selectedItemId = R.id.action_article
+                }
+            }
+        })
 
         bn.setOnNavigationItemSelectedListener {
             if (it.itemId == R.id.action_article) {

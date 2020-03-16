@@ -29,20 +29,27 @@ class ArticlesFragment : BaseFragment<ArticlesViewModel>() {
         ViewModelProvider(requireActivity(), viewModelFactory)[ArticlesViewModel::class.java]
 
     override fun onFragmentReady(view: View, savedInstanceState: Bundle?) {
-        rv_articles.adapter = adapter
-
         viewModel.result.observe(viewLifecycleOwner, observer)
+
+        rv_articles.adapter = adapter
+        sr_articles.setOnRefreshListener {
+            adapter.clear()
+            viewModel.getArticles()
+        }
         viewModel.getArticles()
     }
 
     private val observer = Observer<State<List<Article>>> {
         when (it) {
             is State.Loading -> {
+                sr_articles.isRefreshing = false
+                sr_articles.isEnabled = false
                 rv_articles.hide()
                 pb.show()
                 tv_error.hide()
             }
             is State.Success -> {
+                sr_articles.isEnabled = true
                 for (article in it.data) {
                     adapter.add(ArticleItem(article))
                 }
@@ -51,6 +58,7 @@ class ArticlesFragment : BaseFragment<ArticlesViewModel>() {
                 tv_error.hide()
             }
             is State.Error -> {
+                sr_articles.isEnabled = true
                 pb.hide()
                 rv_articles.hide()
                 tv_error.show()
