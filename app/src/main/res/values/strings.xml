@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">IGDB</string>
+    <string name="user_info">Get user info log</string>
+    <string name="user_list_info">Get user list info log</string>
+    <string name="show_failed_dialog">Show failed dialog</string>
+    <string name="show_success_dialog">Show success dialog</string>
+    <string name="show_confirmation_dialog">Show confirmation dialog</string>
+    <string name="dummy_text">
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+    </string>
+    <string name="long_dummy_text">
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
+    </string>
+    <string name="no_internet_message">Koneksi internet Anda sedang mati</string>
+    <string name="unknown_error_message">Terjadi kesalahan</string>
+</resources>
