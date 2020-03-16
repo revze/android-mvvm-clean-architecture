@@ -26,6 +26,7 @@ object Versions {
     const val retrofit = "2.7.2"
     const val timber = "4.7.1"
     const val dagger = "2.26"
+    const val room = "2.2.4"
 
     // UI
     const val constraintLayout = "1.1.3"
@@ -37,8 +38,8 @@ object Versions {
     const val extjUnit = "1.1.1"
     const val espresso = "3.2.0"
 
-    // DB
-    const val room = "2.2.4"
+    // Helper
+    const val prettytime = "4.0.4.Final"
 }
 
 object Libraries {
@@ -92,6 +93,9 @@ object Libraries {
     const val room = "androidx.room:room-runtime:${Versions.room}"
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
     const val roomCoroutines = "androidx.room:room-ktx:${Versions.room}"
+
+    // prettytime
+    const val prettytime = "org.ocpsoft.prettytime:prettytime:${Versions.prettytime}"
 
     // Test
     const val jUnit = "junit:junit:${Versions.jUnit}"

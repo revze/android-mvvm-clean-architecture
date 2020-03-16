@@ -85,8 +85,8 @@ dependencies {
     kapt(Libraries.roomCompiler)
     implementation(Libraries.roomCoroutines)
 
-    // PrettyTime
-    implementation("org.ocpsoft.prettytime:prettytime:4.0.4.Final")
+    // prettytime
+    implementation(Libraries.prettytime)
 
     // Test
     testImplementation(Libraries.jUnit)
