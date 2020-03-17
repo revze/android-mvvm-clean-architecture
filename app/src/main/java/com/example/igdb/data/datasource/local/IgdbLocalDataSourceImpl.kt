@@ -41,4 +41,8 @@ class IgdbLocalDataSourceImpl @Inject constructor(
     override suspend fun insertGames(data: Games) {
         gamesDao.insert(data)
     }
+
+    override suspend fun deleteAllGames() {
+        gamesDao.deleteAll()
+    }
 }

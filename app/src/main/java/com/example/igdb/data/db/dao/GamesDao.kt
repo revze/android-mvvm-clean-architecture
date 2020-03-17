@@ -1,9 +1,6 @@
 package com.example.igdb.data.db.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.igdb.data.model.Games
 
 @Dao
@@ -19,4 +16,7 @@ interface GamesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(games: Games)
+
+    @Query("DELETE FROM ms_games")
+    suspend fun deleteAll()
 }

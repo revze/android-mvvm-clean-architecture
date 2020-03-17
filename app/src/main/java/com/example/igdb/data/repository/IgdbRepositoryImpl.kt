@@ -1,12 +1,12 @@
 package com.example.igdb.data.repository
 
 import android.app.Application
-import com.example.igdb.data.services.api.Resource
 import com.example.igdb.data.datasource.local.IgdbLocalDataSource
-import com.example.igdb.data.services.api.NetworkBoundResource
+import com.example.igdb.data.datasource.remote.IgdbRemoteDataSource
 import com.example.igdb.data.model.Article
 import com.example.igdb.data.model.Games
-import com.example.igdb.data.datasource.remote.IgdbRemoteDataSource
+import com.example.igdb.data.services.api.NetworkBoundResource
+import com.example.igdb.data.services.api.Resource
 import javax.inject.Inject
 
 class IgdbRepositoryImpl @Inject constructor(
@@ -19,7 +19,7 @@ class IgdbRepositoryImpl @Inject constructor(
             override suspend fun networkCall() =
                 remoteDataSource.getGames("name, artworks.*, screenshots.*, rating, summary")
 
-            override fun shouldLoadFromCache() = true
+            override fun isOfflineFirstEnabled() = true
 
             override suspend fun loadFromCache(): List<Games> {
                 return localDataSource.getGames()
@@ -47,7 +47,7 @@ class IgdbRepositoryImpl @Inject constructor(
                 localDataSource.insertGames(data)
             }
 
-            override fun shouldLoadFromCache() = true
+            override fun isOfflineFirstEnabled() = true
         }.build()
     }
 
@@ -56,7 +56,7 @@ class IgdbRepositoryImpl @Inject constructor(
             override suspend fun networkCall() =
                 remoteDataSource.getArticles("title, published_at, summary, image, author")
 
-            override fun shouldLoadFromCache() = true
+            override fun isOfflineFirstEnabled() = true
 
             override suspend fun loadFromCache() = localDataSource.getArticles()
 
@@ -69,9 +69,12 @@ class IgdbRepositoryImpl @Inject constructor(
     override suspend fun getArticle(id: Int): Resource<Article> {
         return object : NetworkBoundResource<Article>(application) {
             override suspend fun networkCall() =
-                remoteDataSource.getArticle(id, "title, published_at, summary, image, author, videos")[0]
+                remoteDataSource.getArticle(
+                    id,
+                    "title, published_at, summary, image, author, videos"
+                )[0]
 
-            override fun shouldLoadFromCache() = true
+            override fun isOfflineFirstEnabled() = true
 
             override suspend fun loadFromCache(): Article {
                 return localDataSource.getArticle(id)

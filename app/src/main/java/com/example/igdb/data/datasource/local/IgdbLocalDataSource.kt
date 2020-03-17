@@ -19,4 +19,6 @@ interface IgdbLocalDataSource {
     suspend fun insertGames(data: List<Games>)
 
     suspend fun insertGames(data: Games)
+
+    suspend fun deleteAllGames()
 }
