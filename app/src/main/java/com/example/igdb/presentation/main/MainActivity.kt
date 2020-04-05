@@ -5,12 +5,17 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.igdb.R
 import com.example.igdb.external.CustomViewPagerAdapter
+import com.example.igdb.external.helper.ActivityNavigation
 import com.example.igdb.presentation.article.list.ArticlesFragment
 import com.example.igdb.presentation.base.BaseActivity
 import com.example.igdb.presentation.games.list.GamesFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class MainActivity : BaseActivity<MainViewModel>() {
+
+    @Inject
+    lateinit var activityNavigation: ActivityNavigation
 
     override fun getLayoutId() = R.layout.activity_main
 
@@ -45,5 +50,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
             }
             true
         }
+
+        activityNavigation.toLogin()
     }
 }

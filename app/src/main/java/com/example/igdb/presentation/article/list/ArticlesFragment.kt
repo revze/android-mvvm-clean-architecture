@@ -11,11 +11,16 @@ import com.example.igdb.presentation.base.BaseFragment
 import com.example.igdb.external.extensions.hide
 import com.example.igdb.external.items.ArticleItem
 import com.example.igdb.external.extensions.show
+import com.example.igdb.external.helper.ActivityNavigation
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import kotlinx.android.synthetic.main.articles_fragment.*
+import javax.inject.Inject
 
 class ArticlesFragment : BaseFragment<ArticlesViewModel>() {
+
+    @Inject
+    lateinit var activityNavigation: ActivityNavigation
 
     companion object {
         fun newInstance() = ArticlesFragment()
@@ -51,7 +56,9 @@ class ArticlesFragment : BaseFragment<ArticlesViewModel>() {
             is State.Success -> {
                 sr_articles.isEnabled = true
                 for (article in it.data) {
-                    adapter.add(ArticleItem(article))
+                    adapter.add(ArticleItem(article) {
+                        activityNavigation.toArticleDetail(article.id, article.title)
+                    })
                 }
                 pb.hide()
                 rv_articles.show()

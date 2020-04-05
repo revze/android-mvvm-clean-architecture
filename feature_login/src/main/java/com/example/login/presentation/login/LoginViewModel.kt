@@ -1,8 +1,8 @@
 package com.example.login.presentation.login
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.igdb.BaseViewModel
 import com.example.igdb.data.services.api.Resource
 import com.example.login.domain.usecase.LoginFacebookUseCase
 import com.example.login.domain.usecase.LoginGoogleUseCase
@@ -14,9 +14,7 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val loginFacebookUseCase: LoginFacebookUseCase,
     private val loginGoogleUseCase: LoginGoogleUseCase
-) : ViewModel() {
-    val loadingLiveData = MutableLiveData<Boolean>()
-    val errorLiveData = MutableLiveData<String>()
+) : BaseViewModel() {
     val resultLiveData = MutableLiveData<String>()
 
     fun loginFacebook(id: String) = viewModelScope.launch(Dispatchers.IO) {

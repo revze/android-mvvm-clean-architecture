@@ -1,12 +1,11 @@
 package com.example.login.presentation.login
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.igdb.external.constants.ActivityConstant
 import com.example.igdb.external.extensions.longToast
+import com.example.igdb.external.helper.ActivityNavigation
 import com.example.igdb.external.helper.DialogHelper
 import com.example.igdb.presentation.base.BaseViewModelFactory
 import com.example.login.R
@@ -21,6 +20,9 @@ class LoginActivity : AppCompatActivity() {
 
     @Inject
     lateinit var dialogHelper: DialogHelper
+
+    @Inject
+    lateinit var activityNavigation: ActivityNavigation
 
     private lateinit var viewModel: LoginViewModel
 
@@ -38,12 +40,7 @@ class LoginActivity : AppCompatActivity() {
             viewModel.loginFacebook("124234")
         }
         btn_login_email.setOnClickListener {
-            Intent(
-                this,
-                Class.forName(ActivityConstant.LoginActivity.ACTIVITY)
-            ).also {
-                startActivity(it)
-            }
+            activityNavigation.toLoginWithEmail()
         }
     }
 

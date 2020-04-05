@@ -4,8 +4,9 @@ import android.app.Activity
 import android.app.ProgressDialog
 import com.example.igdb.R
 import timber.log.Timber
+import javax.inject.Inject
 
-class DialogHelper(private val activity: Activity) {
+class DialogHelper @Inject constructor(private val activity: Activity) {
     private var progressDialog: ProgressDialog? = null
 
     fun showFailedDialog() {

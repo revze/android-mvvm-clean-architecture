@@ -16,7 +16,7 @@ class ViewModelModule {
 
     @Provides
     @FeatureScope
-    fun provideLogin2ViewModel(viewModel: LoginEmailViewModel): BaseViewModelFactory<LoginEmailViewModel> =
+    fun provideLoginEmailViewModel(viewModel: LoginEmailViewModel): BaseViewModelFactory<LoginEmailViewModel> =
         BaseViewModelFactory { viewModel }
 
 }

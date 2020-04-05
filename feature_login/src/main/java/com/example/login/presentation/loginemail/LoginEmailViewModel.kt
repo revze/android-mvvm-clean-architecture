@@ -1,8 +1,8 @@
 package com.example.login.presentation.loginemail
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.igdb.BaseViewModel
 import com.example.igdb.data.services.api.Resource
 import com.example.login.domain.usecase.LoginEmailUseCase
 import kotlinx.coroutines.Dispatchers
@@ -12,9 +12,7 @@ import javax.inject.Inject
 
 class LoginEmailViewModel @Inject constructor(
     private val loginEmailUseCase: LoginEmailUseCase
-) : ViewModel() {
-    val loadingLiveData = MutableLiveData<Boolean>()
-    val errorLiveData = MutableLiveData<String>()
+) : BaseViewModel() {
     val resultLiveData = MutableLiveData<String>()
 
     fun loginEmail(email: String, password: String) = viewModelScope.launch(Dispatchers.IO) {
