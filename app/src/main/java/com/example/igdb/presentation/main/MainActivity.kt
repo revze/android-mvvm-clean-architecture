@@ -1,6 +1,7 @@
 package com.example.igdb.presentation.main
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.igdb.R
 import com.example.igdb.external.CustomViewPagerAdapter
@@ -18,7 +19,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
 
     override fun onActivityReady(savedInstanceState: Bundle?) {
         val fragments =
-            arrayListOf(
+            arrayListOf<Fragment>(
                 GamesFragment.newInstance(),
                 ArticlesFragment.newInstance()
             )

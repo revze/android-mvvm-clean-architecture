@@ -1,5 +1,6 @@
 import com.example.buildsrc.AppMetaData
 import com.example.buildsrc.Libraries
+import kotlin.collections.*
 
 plugins {
     id("com.android.application")
@@ -18,6 +19,7 @@ android {
         versionCode = AppMetaData.versionCode
         versionName = AppMetaData.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = false
     }
     buildTypes {
         getByName("release") {
@@ -29,61 +31,63 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    dynamicFeatures = mutableSetOf(":feature_login", ":feature_games")
+//    dynamicFeatures.add(":login")
 }
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     // Kotlin
-    implementation(Libraries.kotlin)
+    api(Libraries.kotlin)
 
     // AndroidX
-    implementation(Libraries.appCompat)
-    implementation(Libraries.recyclerView)
-    implementation(Libraries.coreKtx)
-    implementation(Libraries.constraintLayout)
-    implementation(Libraries.legacySupport)
-    implementation(Libraries.googleMaterial)
+    api(Libraries.appCompat)
+    api(Libraries.recyclerView)
+    api(Libraries.coreKtx)
+    api(Libraries.constraintLayout)
+    api(Libraries.legacySupport)
+    api(Libraries.googleMaterial)
 
     // Groupie
     implementation(Libraries.groupie)
     implementation(Libraries.groupieAndroidExtensions)
 
     // Chucker
-    debugImplementation(Libraries.chuckerDebug)
-    releaseImplementation(Libraries.chuckerRelease)
+    debugApi(Libraries.chuckerDebug)
+    releaseApi(Libraries.chuckerRelease)
 
     // Dagger
-    api(Libraries.dagger)
-    api(Libraries.daggerAndroid)
-    api(Libraries.daggerAndroidSupport)
+    implementation(Libraries.dagger)
+    implementation(Libraries.daggerAndroid)
+    implementation(Libraries.daggerAndroidSupport)
     kapt(Libraries.daggerCompiler)
     kapt(Libraries.daggerAndroidProcessor)
 
     // Timber
-    implementation(Libraries.timber)
+    api(Libraries.timber)
 
     // Retrofit
-    implementation(Libraries.retrofit)
-    implementation(Libraries.moshi)
+    api(Libraries.retrofit)
+    api(Libraries.moshi)
 
     // Glide
-    implementation(Libraries.glide)
+    api(Libraries.glide)
     kapt(Libraries.glideCompiler)
 
     // Coroutines
-    implementation(Libraries.coroutines)
+    api(Libraries.coroutines)
 
-    // Lifecycle & ViewModel
-    implementation(Libraries.viewModel)
-    implementation(Libraries.liveData)
+    //  Lifecycle & ViewModel
+    api(Libraries.viewModel)
+    api(Libraries.liveData)
     kapt(Libraries.lifecycleCommon)
-    implementation(Libraries.lifecycleExtensions)
+    api(Libraries.lifecycleExtensions)
 
     // Room
-    implementation(Libraries.room)
+    api(Libraries.room)
     kapt(Libraries.roomCompiler)
-    implementation(Libraries.roomCoroutines)
+    api(Libraries.roomCoroutines)
 
     // prettytime
     implementation(Libraries.prettytime)

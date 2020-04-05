@@ -13,4 +13,6 @@
     </string>
     <string name="no_internet_message">Koneksi internet Anda sedang mati</string>
     <string name="unknown_error_message">Terjadi kesalahan</string>
+    <string name="title_login">Login</string>
+    <string name="title_feature_games">Games</string>
 </resources>

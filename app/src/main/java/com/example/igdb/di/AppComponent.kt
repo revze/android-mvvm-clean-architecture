@@ -2,6 +2,7 @@ package com.example.igdb.di
 
 import android.app.Application
 import com.example.igdb.AndroidApplication
+import com.example.igdb.data.datasource.remote.IgdbRemoteDataSource
 import com.example.igdb.di.builder.ActivityBuilder
 import com.example.igdb.di.modules.DatabaseModule
 import com.example.igdb.di.modules.NetworkModule
@@ -21,4 +22,8 @@ interface AppComponent {
     }
 
     fun inject(application: AndroidApplication)
+
+    fun provideIgdbRemoteDataSource(): IgdbRemoteDataSource
+
+    fun provideApplication(): Application
 }

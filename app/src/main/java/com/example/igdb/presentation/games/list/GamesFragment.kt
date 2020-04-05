@@ -9,13 +9,19 @@ import com.example.igdb.data.model.Games
 import com.example.igdb.domain.common.State
 import com.example.igdb.external.extensions.hide
 import com.example.igdb.external.extensions.show
+import com.example.igdb.external.helper.ActivityNavigation
 import com.example.igdb.external.items.GamesItem
 import com.example.igdb.presentation.base.BaseFragment
+import com.example.igdb.presentation.main.MainActivity
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import kotlinx.android.synthetic.main.games_fragment.*
+import javax.inject.Inject
 
 class GamesFragment : BaseFragment<GamesViewModel>() {
+
+    @Inject
+    lateinit var activityNavigation: ActivityNavigation
 
     companion object {
         fun newInstance() = GamesFragment()
@@ -54,7 +60,9 @@ class GamesFragment : BaseFragment<GamesViewModel>() {
                     adapter.add(
                         GamesItem(
                             games
-                        )
+                        ) {
+                            activityNavigation.toGamesDetail(games.id, games.name)
+                        }
                     )
                 }
                 pb.hide()

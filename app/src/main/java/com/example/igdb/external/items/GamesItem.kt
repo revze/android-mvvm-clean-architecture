@@ -1,18 +1,16 @@
 package com.example.igdb.external.items
 
-import android.content.Intent
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.igdb.R
 import com.example.igdb.data.model.Games
 import com.example.igdb.external.GlideApp
-import com.example.igdb.presentation.games.detail.GamesDetailActivity
 import com.example.igdb.external.extensions.hide
 import com.example.igdb.external.extensions.show
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.android.synthetic.main.item_row_games.view.*
 
-class GamesItem(private val games: Games) : Item() {
+class GamesItem(private val games: Games, private val onClicked: () -> Unit) : Item() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         val view = viewHolder.containerView
         val context = view.context
@@ -36,11 +34,7 @@ class GamesItem(private val games: Games) : Item() {
             .into(view.iv_screenshot)
 
         view.setOnClickListener {
-            Intent(context, GamesDetailActivity::class.java).apply {
-                putExtra(GamesDetailActivity.GAMES_ID, games.id)
-                putExtra(GamesDetailActivity.GAMES_TITLE, games.name)
-                context.startActivity(this)
-            }
+            onClicked()
         }
     }
 

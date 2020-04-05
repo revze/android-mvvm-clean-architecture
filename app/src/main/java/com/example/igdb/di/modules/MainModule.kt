@@ -1,5 +1,6 @@
 package com.example.igdb.di.modules
 
+import com.example.igdb.external.helper.ActivityNavigation
 import com.example.igdb.presentation.base.BaseViewModelFactory
 import com.example.igdb.external.helper.DialogHelper
 import com.example.igdb.presentation.article.list.ArticlesViewModel
@@ -29,5 +30,10 @@ class MainModule {
     @Provides
     fun provideMainViewModelFactory(viewModel: MainViewModel): BaseViewModelFactory<MainViewModel> {
         return BaseViewModelFactory { viewModel }
+    }
+
+    @Provides
+    fun provideActivityNavigation(activity: MainActivity): ActivityNavigation {
+        return ActivityNavigation(activity)
     }
 }
