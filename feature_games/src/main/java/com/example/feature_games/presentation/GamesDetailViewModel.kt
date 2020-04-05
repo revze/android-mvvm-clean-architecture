@@ -3,9 +3,9 @@ package com.example.feature_games.presentation
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.feature_games.domain.usecase.GetGamesDetailUseCase
-import com.example.igdb.BaseViewModel
 import com.example.igdb.data.model.Games
 import com.example.igdb.data.services.api.Resource
+import com.example.igdb.presentation.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject

@@ -3,9 +3,9 @@ package com.example.feature_article.presentation
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.feature_article.domain.usecase.GetArticleDetailUseCase
-import com.example.igdb.BaseViewModel
 import com.example.igdb.data.model.Article
 import com.example.igdb.data.services.api.Resource
+import com.example.igdb.presentation.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject

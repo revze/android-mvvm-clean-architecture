@@ -50,7 +50,5 @@ class MainActivity : BaseActivity<MainViewModel>() {
             }
             true
         }
-
-        activityNavigation.toLogin()
     }
 }

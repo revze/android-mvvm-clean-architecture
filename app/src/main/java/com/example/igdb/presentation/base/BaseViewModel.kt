@@ -1,4 +1,4 @@
-package com.example.igdb
+package com.example.igdb.presentation.base
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

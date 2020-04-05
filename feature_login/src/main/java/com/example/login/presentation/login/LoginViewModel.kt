@@ -2,8 +2,8 @@ package com.example.login.presentation.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.igdb.BaseViewModel
 import com.example.igdb.data.services.api.Resource
+import com.example.igdb.presentation.base.BaseViewModel
 import com.example.login.domain.usecase.LoginFacebookUseCase
 import com.example.login.domain.usecase.LoginGoogleUseCase
 import kotlinx.coroutines.Dispatchers
