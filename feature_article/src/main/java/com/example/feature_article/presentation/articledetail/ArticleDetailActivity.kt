@@ -2,7 +2,6 @@ package com.example.feature_article.presentation.articledetail
 
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.feature_article.R
@@ -13,31 +12,32 @@ import com.example.igdb.external.constants.ActivityConstant.ArticleDetailActivit
 import com.example.igdb.external.constants.ActivityConstant.ArticleDetailActivity.ARTICLE_TITLE
 import com.example.igdb.external.extensions.hide
 import com.example.igdb.external.extensions.show
-import com.example.igdb.external.helper.TextHelper
+import com.example.igdb.presentation.base.BaseActivity
 import com.example.igdb.presentation.base.BaseViewModelFactory
 import kotlinx.android.synthetic.main.activity_article_detail.*
 import javax.inject.Inject
 import com.example.igdb.R as appR
 
-class ArticleDetailActivity : AppCompatActivity() {
+class ArticleDetailActivity : BaseActivity() {
 
     @Inject
     lateinit var viewModelFactory: BaseViewModelFactory<ArticleDetailViewModel>
 
-    @Inject
-    lateinit var textHelper: TextHelper
-
     private lateinit var viewModel: ArticleDetailViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        Injector.create(this).inject(this)
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_article_detail)
+    override fun getLayoutId() = R.layout.activity_article_detail
 
+    override fun initDependencyInjection() {
+        Injector.create(this).inject(this)
+    }
+
+    override fun getViewModelProvider() {
+        viewModel = ViewModelProvider(this, viewModelFactory)[ArticleDetailViewModel::class.java]
+    }
+
+    override fun onActivityReady(savedInstanceState: Bundle?) {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = intent.getStringExtra(ARTICLE_TITLE)
-
-        viewModel = ViewModelProvider(this, viewModelFactory)[ArticleDetailViewModel::class.java]
 
         viewModel.loadingLiveData.observe(this, loadingObserver)
         viewModel.articleLiveData.observe(this, articleObserver)

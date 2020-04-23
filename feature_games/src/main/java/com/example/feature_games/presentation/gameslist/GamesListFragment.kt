@@ -1,10 +1,7 @@
 package com.example.feature_games.presentation.gameslist
 
-import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,8 +11,8 @@ import com.example.igdb.data.model.Games
 import com.example.igdb.domain.common.State
 import com.example.igdb.external.extensions.hide
 import com.example.igdb.external.extensions.show
-import com.example.igdb.external.helper.ActivityNavigation
 import com.example.igdb.external.items.GamesItem
+import com.example.igdb.presentation.base.BaseFragment
 import com.example.igdb.presentation.base.BaseViewModelFactory
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
@@ -25,41 +22,27 @@ import javax.inject.Inject
 /**
  * A simple [Fragment] subclass.
  */
-class GamesListFragment : Fragment() {
+class GamesListFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: BaseViewModelFactory<GamesListViewModel>
-
-    @Inject
-    lateinit var activityNavigation: ActivityNavigation
 
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
     private lateinit var viewModel: GamesListViewModel
 
-    override fun onAttach(context: Context) {
+    override fun getLayoutId() = R.layout.fragment_games_list
+
+    override fun initDependencyInjection() {
         Injector.create(requireActivity()).inject(this)
-        super.onAttach(context)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun getViewModelProvider() {
         viewModel =
             ViewModelProvider(requireActivity(), viewModelFactory)[GamesListViewModel::class.java]
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_games_list, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onFragmentReady(view: View, savedInstanceState: Bundle?) {
         viewModel.result.observe(viewLifecycleOwner, observer)
 
         rv_games.adapter = adapter
@@ -86,7 +69,10 @@ class GamesListFragment : Fragment() {
                         GamesItem(
                             games
                         ) {
-                            activityNavigation.toGamesDetail(games.id, games.name)
+                            baseActivity.activityNavigation.toGamesDetail(
+                                games.id,
+                                games.name
+                            )
                         }
                     )
                 }

@@ -2,7 +2,6 @@ package com.example.feature_games.presentation.gamesdetail
 
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.feature_games.R
@@ -13,31 +12,32 @@ import com.example.igdb.external.constants.ActivityConstant.GamesDetailActivity.
 import com.example.igdb.external.constants.ActivityConstant.GamesDetailActivity.GAMES_NAME
 import com.example.igdb.external.extensions.hide
 import com.example.igdb.external.extensions.show
-import com.example.igdb.external.helper.TextHelper
+import com.example.igdb.presentation.base.BaseActivity
 import com.example.igdb.presentation.base.BaseViewModelFactory
 import kotlinx.android.synthetic.main.activity_games_detail.*
 import javax.inject.Inject
 import com.example.igdb.R as appR
 
-class GamesDetailActivity : AppCompatActivity() {
+class GamesDetailActivity : BaseActivity() {
 
     @Inject
     lateinit var viewModelFactory: BaseViewModelFactory<GamesDetailViewModel>
-
-    @Inject
-    lateinit var textHelper: TextHelper
 
     private lateinit var viewModel: GamesDetailViewModel
 
     private var id = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun getLayoutId() = R.layout.activity_games_detail
+
+    override fun initDependencyInjection() {
         Injector.create(this).inject(this)
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_games_detail)
+    }
 
+    override fun getViewModelProvider() {
         viewModel = ViewModelProvider(this, viewModelFactory)[GamesDetailViewModel::class.java]
+    }
 
+    override fun onActivityReady(savedInstanceState: Bundle?) {
         id = intent.getIntExtra(GAMES_ID, 0)
 
         supportActionBar?.title = intent.getStringExtra(GAMES_NAME)

@@ -2,40 +2,41 @@ package com.example.igdb.presentation.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
+import com.example.igdb.external.helper.ActivityNavigation
+import com.example.igdb.external.helper.DialogHelper
+import com.example.igdb.external.helper.FragmentNavigation
 import com.example.igdb.external.helper.TextHelper
-import dagger.android.AndroidInjection
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 
-abstract class BaseActivity<T : ViewModel> : AppCompatActivity(), HasAndroidInjector {
+abstract class BaseActivity : AppCompatActivity() {
     @Inject
-    lateinit var viewModelFactory: BaseViewModelFactory<T>
+    lateinit var activityNavigation: ActivityNavigation
 
     @Inject
-    lateinit var androidInjector: DispatchingAndroidInjector<Any>
+    lateinit var fragmentNavigation: FragmentNavigation
+
+    @Inject
+    lateinit var dialogHelper: DialogHelper
 
     @Inject
     lateinit var textHelper: TextHelper
 
-    internal lateinit var viewModel: T
+    protected abstract fun getLayoutId(): Int
+
+    protected abstract fun onActivityReady(savedInstanceState: Bundle?)
+
+    protected abstract fun initDependencyInjection()
+
+    protected open fun getViewModelProvider() {
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
+        initDependencyInjection()
         super.onCreate(savedInstanceState)
         setContentView(getLayoutId())
-
-        viewModel = getViewModelProvider()
+        getViewModelProvider()
 
         onActivityReady(savedInstanceState)
     }
-
-    internal abstract fun getLayoutId(): Int
-
-    internal abstract fun onActivityReady(savedInstanceState: Bundle?)
-
-    internal abstract fun getViewModelProvider(): T
-
-    override fun androidInjector() = androidInjector
 }
