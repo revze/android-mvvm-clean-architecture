@@ -5,4 +5,6 @@ import com.example.igdb.data.services.api.Resource
 
 interface GamesRepository {
     suspend fun getGamesDetail(id: Int): Resource<Games>
+
+    suspend fun getGames(): Resource<List<Games>>
 }

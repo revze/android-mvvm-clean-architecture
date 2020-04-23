@@ -14,7 +14,7 @@
     </dist:module>
 
     <application>
-        <activity android:name=".presentation.GamesDetailActivity"></activity>
+        <activity android:name=".presentation.gamesdetail.GamesDetailActivity"></activity>
     </application>
 
 </manifest>

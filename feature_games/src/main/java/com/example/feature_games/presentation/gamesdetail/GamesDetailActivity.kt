@@ -1,4 +1,4 @@
-package com.example.feature_games.presentation
+package com.example.feature_games.presentation.gamesdetail
 
 import android.os.Bundle
 import android.view.MenuItem

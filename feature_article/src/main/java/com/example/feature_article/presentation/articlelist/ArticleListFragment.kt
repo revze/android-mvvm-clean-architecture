@@ -1,39 +1,62 @@
-package com.example.igdb.presentation.article.list
+package com.example.feature_article.presentation.articlelist
 
+import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.igdb.R
-import com.example.igdb.domain.common.State
+import com.example.feature_article.R
+import com.example.feature_article.di.Injector
 import com.example.igdb.data.model.Article
-import com.example.igdb.presentation.base.BaseFragment
+import com.example.igdb.domain.common.State
 import com.example.igdb.external.extensions.hide
-import com.example.igdb.external.items.ArticleItem
 import com.example.igdb.external.extensions.show
 import com.example.igdb.external.helper.ActivityNavigation
+import com.example.igdb.external.items.ArticleItem
+import com.example.igdb.presentation.base.BaseViewModelFactory
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
-import kotlinx.android.synthetic.main.articles_fragment.*
+import kotlinx.android.synthetic.main.fragment_article_list.*
 import javax.inject.Inject
 
-class ArticlesFragment : BaseFragment<ArticlesViewModel>() {
+class ArticleListFragment : Fragment() {
+
+    @Inject
+    lateinit var viewModelFactory: BaseViewModelFactory<ArticleListViewModel>
 
     @Inject
     lateinit var activityNavigation: ActivityNavigation
 
-    companion object {
-        fun newInstance() = ArticlesFragment()
-    }
-
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
-    override fun getLayoutId() = R.layout.articles_fragment
+    private lateinit var viewModel: ArticleListViewModel
 
-    override fun getViewModelProvider() =
-        ViewModelProvider(requireActivity(), viewModelFactory)[ArticlesViewModel::class.java]
+    override fun onAttach(context: Context) {
+        Injector.create(requireActivity()).inject(this)
+        super.onAttach(context)
+    }
 
-    override fun onFragmentReady(view: View, savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel =
+            ViewModelProvider(requireActivity(), viewModelFactory)[ArticleListViewModel::class.java]
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_article_list, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         viewModel.result.observe(viewLifecycleOwner, observer)
 
         rv_articles.adapter = adapter

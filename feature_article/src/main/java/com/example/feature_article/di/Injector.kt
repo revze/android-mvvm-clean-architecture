@@ -6,6 +6,7 @@ import com.example.igdb.AndroidApplication
 object Injector {
     fun create(activity: Activity): ArticleComponent {
         val app = activity.application as AndroidApplication
-        return DaggerArticleComponent.factory().create(app.getInjector())
+        return DaggerArticleComponent.builder().initAppComponent(app.getInjector())
+            .initActivity(activity).build()
     }
 }

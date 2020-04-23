@@ -1,4 +1,4 @@
-package com.example.feature_article.presentation
+package com.example.feature_article.presentation.articledetail
 
 import android.os.Bundle
 import android.view.MenuItem

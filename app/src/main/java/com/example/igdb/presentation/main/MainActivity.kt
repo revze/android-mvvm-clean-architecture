@@ -6,9 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.igdb.R
 import com.example.igdb.external.CustomViewPagerAdapter
 import com.example.igdb.external.helper.ActivityNavigation
-import com.example.igdb.presentation.article.list.ArticlesFragment
+import com.example.igdb.external.helper.FragmentNavigation
 import com.example.igdb.presentation.base.BaseActivity
-import com.example.igdb.presentation.games.list.GamesFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -17,17 +16,22 @@ class MainActivity : BaseActivity<MainViewModel>() {
     @Inject
     lateinit var activityNavigation: ActivityNavigation
 
+    @Inject
+    lateinit var fragmentNavigation: FragmentNavigation
+
     override fun getLayoutId() = R.layout.activity_main
 
     override fun getViewModelProvider() =
         ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
 
     override fun onActivityReady(savedInstanceState: Bundle?) {
-        val fragments =
-            arrayListOf<Fragment>(
-                GamesFragment.newInstance(),
-                ArticlesFragment.newInstance()
-            )
+        val fragments = mutableListOf<Fragment>()
+        fragmentNavigation.getGamesList()?.let {
+            fragments.add(it)
+        }
+        fragmentNavigation.getArticleList()?.let {
+            fragments.add(it)
+        }
         val adapter = CustomViewPagerAdapter(
             supportFragmentManager,
             fragments

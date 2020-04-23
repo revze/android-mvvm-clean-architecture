@@ -27,4 +27,22 @@ class GamesRepositoryImpl @Inject constructor(private val application: Applicati
 
         }.build()
     }
+
+    override suspend fun getGames(): Resource<List<Games>> {
+        return object : NetworkBoundResource<List<Games>>(application) {
+            override suspend fun networkCall(): List<Games> {
+                return remoteDataSource.getGames("name, artworks.*, screenshots.*, rating, summary")
+            }
+
+            override fun isOfflineFirstEnabled() = true
+
+            override suspend fun loadFromCache(): List<Games>? {
+                return localDataSource.getGames()
+            }
+
+            override suspend fun insertToCache(data: List<Games>) {
+                localDataSource.insertGames(data)
+            }
+        }.build()
+    }
 }
